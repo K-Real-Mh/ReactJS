@@ -1,5 +1,6 @@
 .App {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: #282c34;
@@ -8,5 +9,18 @@
 
 .Message {
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #ffffff;
 }
+
+form {
+  display: grid;
+  gap: 1rem;
+}
+
+label {
+  display: grid;
+  gap: 1em;
+  color: #ffffff;
+}
+
+
