@@ -1,45 +1,41 @@
 import './App.css';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import Message from './components/Message/Message';
+import Form from './components/Form/Form';
+import { Container, createTheme, Grid, List, ListItem, ListItemText } from '@material-ui/core';
+import { green, purple } from '@material-ui/core/colors';
+import { ThemeProvider } from '@material-ui/core/styles';
 
-function Message({author, text}) {
-    return <p className="Message">{author && `${author}:`} {text}</p>
-}
-
-function Form({onSubmit}) {
-    const [author, setAuthor] = useState('');
-    const [text, setText] = useState('');
-
-    const onButtonClick = () => {
-       if (author && text) {
-           const message = {
-               author: author,
-               text: text
-           }
-           onSubmit(message);
-       }
-    }
-
-    return (
-        <form>
-            <label>
-                Введите имя
-                <input type="text" placeholder={'Имя'} onChange={e => setAuthor(e.target.value)}/>
-            </label>
-            <label>
-                Введите сообщение
-                <textarea cols="30" rows="10" placeholder={'Сообщение'}
-                          onChange={e => setText(e.target.value)}></textarea>
-            </label>
-            <button type={'button'} onClick={onButtonClick}>Submit</button>
-        </form>
-    );
-}
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: purple[500],
+        },
+        secondary: {
+            main: green[500],
+        },
+    },
+});
 
 function App() {
     const [messageList, setMessageList] = useState([]);
+    const chats = [
+        {
+            name: 'Han Solo',
+            id: 'Han Solo',
+        },
+        {
+            name: 'Vasya',
+            id: 'Vasya',
+        },
+        {
+            name: 'Katya',
+            id: 'Katya',
+        },
+    ]
 
     useEffect(() => {
-        if(messageList.length > 0 && messageList[messageList.length - 1].author !== 'robot') {
+        if (messageList.length > 0 && messageList[messageList.length - 1].author !== 'robot') {
             const author = messageList[messageList.length - 1].author;
             const message = {
                 author: 'robot',
@@ -54,22 +50,45 @@ function App() {
         }
     }, [messageList])
 
-    const handleAddMessage = (message) => {
-        setMessageList(prevMessages => {
-            return [...prevMessages, message];
-        })
-    }
+    const handleAddMessage = useCallback(
+        (message) => {
+            setMessageList(prevMessages => {
+                return [...prevMessages, message];
+            })
+        }, []
+    )
 
     return (
         <div className="App">
-            {
-                messageList.length === 0 ?
-                    <Message text={'Write your first message'}/> :
-                    messageList.map((message, id) => {
-                        return <Message key={id} author={message.author} text={message.text}/>
-                    })
-            }
-            <Form onSubmit={handleAddMessage}/>
+            <ThemeProvider theme={theme}>
+                <Container maxWidth="lg">
+                    <Grid container spacing={3}>
+                        <Grid item xs={3}>
+                            <List className={'list'} component="nav">
+                                {
+                                    chats.map(chat => {
+                                        return (
+                                            <ListItem button key={chat.id}>
+                                                <ListItemText primary={chat.name}/>
+                                            </ListItem>
+                                        );
+                                    })
+                                }
+                            </List>
+                        </Grid>
+                        <Grid item xs={8}>
+                            {
+                                messageList.length === 0 ?
+                                    <Message text={'Write your first message'}/> :
+                                    messageList.map((message, id) => {
+                                        return <Message key={id} author={message.author} text={message.text}/>
+                                    })
+                            }
+                            <Form onSubmit={handleAddMessage}/>
+                        </Grid>
+                    </Grid>
+                </Container>
+            </ThemeProvider>
         </div>
     );
 }
