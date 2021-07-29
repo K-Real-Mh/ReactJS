@@ -1,0 +1,18 @@
+.home {
+    height: 100vh;
+}
+
+.home__link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-decoration: none;
+    color: white;
+    font-size: 9rem;
+    transition: color .3s ease 0s;
+}
+
+.home__link:hover {
+    color: deepskyblue;
+}
