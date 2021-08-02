@@ -1,7 +1,13 @@
 import { useRef, useState } from 'react';
 import { Button, TextField } from '@material-ui/core';
 
-export default function Form({onSubmit}) {
+export default function Form(
+    {
+        onSubmit,
+        label = 'Enter your message',
+        btnLabel = 'Send'
+    }
+) {
     const [text, setText] = useState('');
     const inputRef = useRef(null);
 
@@ -9,11 +15,7 @@ export default function Form({onSubmit}) {
         e.preventDefault();
 
         if (text) {
-            const message = {
-                sender: 'you',
-                message: text,
-            }
-            onSubmit(message);
+            onSubmit(text);
             setText('');
             inputRef.current?.focus();
         }
@@ -23,14 +25,14 @@ export default function Form({onSubmit}) {
         <form noValidate autoComplete="off" onSubmit={onFormSubmit}>
             <TextField
                 id="standard-textarea"
-                label="Введите сообщение"
+                label={label}
                 multiline
                 onChange={e => setText(e.target.value)}
                 value={text}
                 inputRef={inputRef}
             />
             <Button variant="contained" color="primary" type="submit">
-                Send
+                {btnLabel}
             </Button>
         </form>
     );
