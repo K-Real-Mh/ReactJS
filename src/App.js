@@ -1,13 +1,8 @@
 import './App.css';
-import { Switch, Route } from 'react-router-dom';
 import { Container, createTheme } from '@material-ui/core';
 import { green, purple } from '@material-ui/core/colors';
 import { ThemeProvider } from '@material-ui/core/styles';
-import Home from './pages/Home/Home';
-import Profile from './pages/Profile/Profile';
-import Chats from './pages/Chats/Chats';
-import { useState } from 'react';
-import NoChat from './pages/NoChat/NoChat';
+import Router from './components/Router/Router';
 
 const theme = createTheme({
     palette: {
@@ -20,68 +15,12 @@ const theme = createTheme({
     },
 });
 
-const initialChats = [
-    {
-        name: 'Han Solo',
-        id: 'Han Solo',
-        messages: [
-            {
-                sender: 'you',
-                message: 'hello !'
-            },
-            {
-                sender: 'Han Solo',
-                message: 'hello, my friend!'
-            }
-        ]
-    },
-    {
-        name: 'Vasya',
-        id: 'Vasya',
-        messages: [
-            {
-                sender: 'you',
-                message: 'hello Vasya!'
-            },
-            {
-                sender: 'Han Solo',
-                message: 'What do you need?'
-            }
-        ]
-    },
-    {
-        name: 'Katya',
-        id: 'Katya',
-        messages: []
-    },
-]
-
 function App() {
-    const [chats, setChats] = useState(initialChats);
-
     return (
         <div className="App">
             <ThemeProvider theme={theme}>
                 <Container maxWidth="lg">
-                    <Switch>
-
-                        <Route exact path="/">
-                            <Home/>
-                        </Route>
-
-                        <Route path="/profile">
-                            <Profile/>
-                        </Route>
-
-                        <Route path="/chats/:chatId?">
-                            <Chats chats={chats} setChats={setChats}/>
-                        </Route>
-
-                        <Route path="/nochat">
-                            <NoChat chats={chats}/>
-                        </Route>
-
-                    </Switch>
+                    <Router/>
                 </Container>
             </ThemeProvider>
         </div>
@@ -89,3 +28,22 @@ function App() {
 }
 
 export default App;
+
+/*
+* APP -> chats, setChats
+*   Profile -> name, showName (redux)
+*   Chats -> chats, ChatId
+*       ChatList -> chats.name, ChatId
+*       MessageList -> chats[chatId].messages, chats[chatId].name, messageList, setMessageList
+*   NoChat -> chats
+*       ChatList -> chats.name, ChatId
+*
+* APP ->
+*   Router
+*       Profile -> name, showName (redux), changeName
+*       Chats -> chats, ChatId
+*           ChatList -> chats.name, ChatId
+*           MessageList -> chats[chatId] (redux)
+*       NoChat -> chats
+*           ChatList -> chats.name, ChatId
+* */
