@@ -3,6 +3,7 @@ import Home from '../../pages/Home/Home';
 import Profile from '../../pages/Profile/Profile';
 import NoChat from '../../pages/NoChat/NoChat';
 import ChatsContainer from '../../pages/Chats/ChatsContainer/ChatsContainer';
+import Cats from '../../pages/Cats/Cats';
 
 function Router() {
     return (
@@ -14,6 +15,10 @@ function Router() {
 
             <Route path="/profile">
                 <Profile/>
+            </Route>
+
+            <Route path="/cats">
+                <Cats/>
             </Route>
 
             <Route path="/chats/:chatId?">

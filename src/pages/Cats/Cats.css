@@ -1,0 +1,28 @@
+.cats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.cats__loading {
+    display: flex;
+    justify-content: center;
+}
+
+.cats__error {
+    background: #ffffff;
+    overflow: hidden;
+    border-radius: 100px;
+}
+
+.cats__item {
+    list-style-type: none;
+    height: 20rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.cats__item img {
+    position: absolute;
+    width: 100%;
+}
