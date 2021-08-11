@@ -3,7 +3,7 @@ import Form from '../Form/Form';
 import { Grid } from '@material-ui/core';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { addMessage } from '../../store/messages/actions';
+import { addMessageWithThunk } from '../../store/messages/actions';
 
 export default function MessageList({messageList, recipient, chatId}) {
     const dispatch = useDispatch();
@@ -14,15 +14,7 @@ export default function MessageList({messageList, recipient, chatId}) {
                 author: 'you',
                 text: message
             }
-            dispatch(addMessage(chatId, newMessage))
-
-            setTimeout(() => {
-                dispatch(addMessage(chatId, {
-                    author: recipient,
-                    text: `Zzzz...`
-                }))
-            }, 1500)
-
+            dispatch(addMessageWithThunk(chatId, newMessage, recipient))
         }, [chatId, recipient, dispatch]
     )
 

@@ -7,3 +7,17 @@ export const addMessage = (chatId, message) => ({
         message,
     }
 })
+
+export const addMessageWithThunk = (chatId, message, recipient) => {
+    return (dispatch) => {
+        dispatch(addMessage(chatId, message));
+        if (message.author === 'you') {
+            setTimeout(() => {
+                dispatch(addMessage(chatId, {
+                    author: recipient,
+                    text: `Zzzz...`
+                }))
+            }, 1500)
+        }
+    }
+}

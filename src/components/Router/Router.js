@@ -1,8 +1,8 @@
 import { Route, Switch } from 'react-router-dom';
 import Home from '../../pages/Home/Home';
 import Profile from '../../pages/Profile/Profile';
-import Chats from '../../pages/Chats/Chats';
 import NoChat from '../../pages/NoChat/NoChat';
+import ChatsContainer from '../../pages/Chats/ChatsContainer/ChatsContainer';
 
 function Router() {
     return (
@@ -17,7 +17,7 @@ function Router() {
             </Route>
 
             <Route path="/chats/:chatId?">
-                <Chats/>
+                <ChatsContainer/>
             </Route>
 
             <Route path="/nochat">
