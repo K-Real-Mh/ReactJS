@@ -14,6 +14,12 @@ export default function Home() {
             <Grid item xs={4}>
                 <Link className="home__link" to="/cats">Cats</Link>
             </Grid>
+            <Grid item xs={6}>
+                <Link className="home__link" to="/login">Login</Link>
+            </Grid>
+            <Grid item xs={6}>
+                <Link className="home__link" to="/signup">Registration</Link>
+            </Grid>
         </Grid>
     )
 }
