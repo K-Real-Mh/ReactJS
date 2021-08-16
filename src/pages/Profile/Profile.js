@@ -1,7 +1,7 @@
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useCallback } from 'react';
 import { profileNameSelector } from '../../store/profile/selectors';
-import Form from '../../components/Form/Form';
+import  { FormPure } from '../../components/Form/Form';
 import { changeName } from '../../store/profile/actions';
 
 export default function Profile() {
@@ -20,7 +20,7 @@ export default function Profile() {
             <div>
                 <h2>{name}</h2>
             </div>
-            <Form onSubmit={setName} label="Change name" btnLabel="Change"/>
+            <FormPure onSubmit={setName} label="Change name" btnLabel="Change"/>
         </>
     );
 }
