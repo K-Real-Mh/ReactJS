@@ -3,6 +3,10 @@ import { Container, createTheme } from '@material-ui/core';
 import { green, purple } from '@material-ui/core/colors';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Router from './components/Router/Router';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import firebase from 'firebase';
+import { changeIsAuthed } from './store/profile/actions';
 
 const theme = createTheme({
     palette: {
@@ -16,6 +20,14 @@ const theme = createTheme({
 });
 
 function App() {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        firebase.auth().onAuthStateChanged(user => {
+            dispatch(changeIsAuthed(!!user));
+        })
+    }, [])
+
     return (
         <div className="App">
             <ThemeProvider theme={theme}>
@@ -28,22 +40,3 @@ function App() {
 }
 
 export default App;
-
-/*
-* APP -> chats, setChats
-*   Profile -> name, showName (redux)
-*   Chats -> chats, ChatId
-*       ChatList -> chats.name, ChatId
-*       MessageList -> chats[chatId].messages, chats[chatId].name, messageList, setMessageList
-*   NoChat -> chats
-*       ChatList -> chats.name, ChatId
-*
-* APP ->
-*   Router
-*       Profile -> name, showName (redux), changeName
-*       Chats -> chats, ChatId
-*           ChatList -> chats.name, ChatId
-*           MessageList -> chats[chatId] (redux)
-*       NoChat -> chats
-*           ChatList -> chats.name, ChatId
-* */

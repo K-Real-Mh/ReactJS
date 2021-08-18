@@ -3,19 +3,21 @@ import Form from '../Form/Form';
 import { Grid } from '@material-ui/core';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { addMessageWithThunk } from '../../store/messages/actions';
+import { addMessageWithFirebase } from '../../store/messages/actions';
+import { AUTHORS } from '../../constants';
 
-export default function MessageList({messageList, recipient, chatId}) {
+export default function MessageList({messageList, chatId}) {
     const dispatch = useDispatch();
 
     const handleAddMessage = useCallback(
         (message) => {
             const newMessage = {
-                author: 'you',
-                text: message
+                author: AUTHORS.ME,
+                text: message,
+                id: `${chatId}-${Date.now()}`,
             }
-            dispatch(addMessageWithThunk(chatId, newMessage, recipient))
-        }, [chatId, recipient, dispatch]
+            dispatch(addMessageWithFirebase(chatId, newMessage));
+        }, [chatId, dispatch]
     )
 
     return (

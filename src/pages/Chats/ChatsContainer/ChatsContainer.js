@@ -1,11 +1,13 @@
 import { Redirect, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { chatListSelector } from '../../../store/chats/selectors';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { messageListSelector } from '../../../store/messages/selectors';
 import Chats from '../Chats';
+import { initMessageTracking } from '../../../store/messages/actions';
 
 export default function ChatsContainer() {
+    const dispatch = useDispatch();
     const {chatId} = useParams();
 
     const getMessageSelected = useMemo(() => {
@@ -17,14 +19,14 @@ export default function ChatsContainer() {
         (prev, next) => prev.length === next.length
     );
 
+    useEffect(() => {
+        dispatch(initMessageTracking())
+    }, [])
+
     const chats = useSelector(
         chatListSelector,
         (prev, next) => prev.length === next.length
     );
-
-    const chatName = useMemo(() => {
-        return chats.find(item => item.id === chatId)?.name;
-    }, [chatId, chats])
 
     if (!chatId || !messages) {
         return <Redirect to="/nochat"/>;
@@ -35,7 +37,6 @@ export default function ChatsContainer() {
             chats={chats}
             chatId={chatId}
             messages={messages}
-            chatName={chatName}
         />
     );
 }
