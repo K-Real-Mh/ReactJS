@@ -1,5 +1,5 @@
 import Message from '../Message/Message';
-import Form from '../Form/Form';
+import { FormPure } from '../Form/Form';
 import { Grid } from '@material-ui/core';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
@@ -29,7 +29,7 @@ export default function MessageList({messageList, chatId}) {
                         return <Message key={message.id} text={message.text} author={message.author}/>
                     })
             }
-            <Form onSubmit={handleAddMessage} label="Message" btnLabel="Send"/>
+            <FormPure onSubmit={handleAddMessage} label="Message" btnLabel="Send"/>
         </Grid>
     );
 }

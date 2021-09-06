@@ -1,7 +1,7 @@
-import { useRef, useState } from 'react';
+import { memo, useRef, useState } from 'react';
 import { Button, TextField } from '@material-ui/core';
 
-export default function Form(
+function Form(
     {
         onSubmit,
         label = 'Enter your message',
@@ -37,3 +37,5 @@ export default function Form(
         </form>
     );
 }
+
+export const FormPure = memo(Form);
